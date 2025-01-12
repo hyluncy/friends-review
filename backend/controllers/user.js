@@ -14,5 +14,5 @@ const retrieveUser = (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
-    getLoggedInUser,
+    retrieveUser,
   };

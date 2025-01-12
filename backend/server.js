@@ -12,11 +12,11 @@ const HTTP_PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use('/api/users', require('./routes/user')); 
 
 
 // MongoDB Connection and Connection Status
 mongoose.connect(MONGO_URI);
-
 
 mongoose.connection.on('connected', () => {
    console.log('Connected to the database');
@@ -32,15 +32,12 @@ mongoose.connection.on('disconnected', () => {
    console.log('Disconnected from MongoDB');
 });
 
-
 // Home page test route
 app.get('/', (req, res) => {
    res.send('Hello World');
 });
 
-// Sign-up Route
-app.post('/api/signup', async (req, res) => {
-});
+
 
 
 
