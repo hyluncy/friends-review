@@ -1,7 +1,7 @@
 'use client'; 
 import { Nav, Navbar, Container, Form, Row, Col, Button } from 'react-bootstrap'; 
 
-export default function Navigation() {
+export default function MainNavbar() {
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
             <Container>
