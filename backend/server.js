@@ -1,12 +1,11 @@
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 require('dotenv').config();
 
+
 const app = express();
-const MONGO_URI = process.env.MONGO_URI;
 const HTTP_PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -14,23 +13,8 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/users', require('./routes/user')); 
 
-
-// MongoDB Connection and Connection Status
-mongoose.connect(MONGO_URI);
-
-mongoose.connection.on('connected', () => {
-   console.log('Connected to the database');
-});
-
-
-mongoose.connection.on('error', (err) => {
-   console.error('Error connecting to MongoDB:', err.message);
-});
-
-
-mongoose.connection.on('disconnected', () => {
-   console.log('Disconnected from MongoDB');
-});
+// Connect to MongoDB
+connectToDB(); 
 
 // Home page test route
 app.get('/', (req, res) => {
