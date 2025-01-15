@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import MainNavbar from "../components/mainNavbar";
 import 'react-tooltip/dist/react-tooltip.css'; 
 
