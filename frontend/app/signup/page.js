@@ -10,14 +10,20 @@ export default function SignUpPage() {
     const router = useRouter(); 
     const [ user, setUser ] = React.useState({
         email: '', 
-        password: '', 
         username: '', 
+        password: '', 
+        confirmPassword: '',    // Only required for validation in the frontend
     })
 
     const onSignUp = async (event) => {
         event.preventDefault(); 
         try {
-            const res = await axios.post('api/users/signup', user); 
+            const res = await axios.post('api/users/signup', {
+                email: user.email, 
+                username: user.username, 
+                password: user.password, 
+                confirmPassword: user.confirmPassword,
+            }); 
             router.push('/login'); 
         } catch (err) {
             console.log('Sign-Up Fail', err.message); 
@@ -64,6 +70,16 @@ export default function SignUpPage() {
                         placeholder='Enter Password'
                         value={user.password}
                         onChange={(e) => setUser({ ...user, password: e.target.value})}
+                    />
+                </Form.Group>
+
+                <Form.Group className='mb-3' controlId='formPassword'>
+                    <Form.Label>Password </Form.Label>
+                    <Form.Control 
+                        type='password' 
+                        placeholder='Confirm Password'
+                        value={user.confirmPassword}
+                        onChange={(e) => setUser({ ...user, confirmPassword: e.target.value})}
                     />
                 </Form.Group>
 
