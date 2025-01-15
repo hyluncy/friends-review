@@ -2,8 +2,7 @@ const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-require('dotenv').config();
-
+const db = require('./config/database.js')
 
 const app = express();
 const HTTP_PORT = process.env.PORT || 3000;
@@ -14,16 +13,12 @@ app.use(cors());
 app.use('/api/users', require('./routes/user')); 
 
 // Connect to MongoDB
-connectToDB(); 
+db.connectToDB(); 
 
 // Home page test route
 app.get('/', (req, res) => {
    res.send('Hello World');
 });
-
-
-
-
 
 // User authentication
 // POST signup --> create new user
