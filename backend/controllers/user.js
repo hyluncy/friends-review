@@ -1,12 +1,25 @@
+const bcyrpt = require('bcryptjs'); 
 
 
 const registerUser = async (req, res) => {
     try {
-        const { username, email, password } = req.body
+        const { email, username, password, createdOn } = req.body; 
 
-        const user = new User({ username, email, password }); 
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: 'Passwords do not match'})
+        }
+        
+        const hashedPassword = await bcyrpt.hash(passowrd, 10); 
+
+        const user = new User({ 
+            username, 
+            email, 
+            password: hashedPassword, 
+            createdOn, 
+        }); 
+
         await user.save(); 
-        res.json({ message: 'User account created.' });
+        res.json({ message: `User, ${username}, has been registered.` });
     } catch(err) {
         if (err.name === 'ValidationError') {
             res.status(400).json({ message: err.message })
