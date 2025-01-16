@@ -1,21 +1,20 @@
-const bcyrpt = require('bcryptjs'); 
-
+const User = require('../models/users'); 
+const bcrypt = require('bcryptjs'); 
 
 const registerUser = async (req, res) => {
     try {
-        const { email, username, password, createdOn } = req.body; 
+        const { email, username, password, confirmPassword } = req.body; 
 
         if (password !== confirmPassword) {
             return res.status(400).json({ message: 'Passwords do not match'})
         }
         
-        const hashedPassword = await bcyrpt.hash(passowrd, 10); 
+        const hashedPassword = await bcrypt.hash(password, 10); 
 
         const user = new User({ 
             username, 
             email, 
             password: hashedPassword, 
-            createdOn, 
         }); 
 
         await user.save(); 
@@ -34,8 +33,19 @@ const loginUser = (req, res) => {
     res.json({ message: 'Login User' }); 
 }; 
 
-const retrieveUser = (req, res) => {
-    res.json({ message: 'Logged In User Data' }); 
+const retrieveUser = async (email, password) => {
+    try {
+        const foundUser = await User.findOne({ email }); 
+        const correctPassword = await bcrypt.compare(password, foundUser.password); 
+
+        if (!correctPassword) {
+            return { status: 401, message: 'Incorrect Password' }; 
+        }
+
+        return { status: 200, user: foundUser }; 
+    } catch (err) {
+        return { status: 500, message: 'Error', error: err.message }
+    }
 }; 
 
 module.exports = {
