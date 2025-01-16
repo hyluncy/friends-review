@@ -29,22 +29,38 @@ const registerUser = async (req, res) => {
     }
 }; 
 
-const loginUser = (req, res) => {
-    res.json({ message: 'Login User' }); 
-}; 
-
-const retrieveUser = async (email, password) => {
+const loginUser = async (req, res) => {
     try {
-        const foundUser = await User.findOne({ email }); 
-        const correctPassword = await bcrypt.compare(password, foundUser.password); 
+        const { email, password } = req.body; 
+
+        const userAccount = await retrieveUser(email); 
+
+        if (userAccount.status !== 200) {
+            return res.status(userAccount.status).json({ message: userAccount.message }); 
+        }
+
+        const correctPassword = await bcrypt.compare(password, userAccount.password); 
 
         if (!correctPassword) {
             return { status: 401, message: 'Incorrect Password' }; 
         }
+        
+        res.redirect('/'); 
 
+    } catch (err) {
+        res.status(500).json({ message: 'Error', error: err.message })
+    }   
+}; 
+
+const retrieveUser = async (email) => {
+    try {
+        const foundUser = await User.findOne({ email }); 
+        if (!foundUser) {
+            return { status: 404, message: 'User not found'}; 
+        }
         return { status: 200, user: foundUser }; 
     } catch (err) {
-        return { status: 500, message: 'Error', error: err.message }
+        return { status: 500, message: 'Error', error: err.message }; 
     }
 }; 
 
