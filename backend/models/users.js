@@ -10,6 +10,6 @@ const userSchema = new mongoose.Schema({
    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Experiences'}],
 }); 
 
-userSchema.plugin(uniqueValidator, { message: `${PATH} already exists`})
+userSchema.plugin(uniqueValidator, { message: `{PATH} already exists`})
 
 module.exports = mongoose.model('User', userSchema);

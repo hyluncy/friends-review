@@ -32,14 +32,14 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body; 
-
         const userAccount = await retrieveUser(email); 
 
         if (userAccount.status !== 200) {
             return res.status(userAccount.status).json({ message: userAccount.message }); 
         }
 
-        const correctPassword = await bcrypt.compare(password, userAccount.password); 
+        const user = userAccount.user; // retrieveUser() returns both status and user 
+        const correctPassword = await bcrypt.compare(password, user .password); 
 
         if (!correctPassword) {
             return { status: 401, message: 'Incorrect Password' }; 
