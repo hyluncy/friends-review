@@ -13,12 +13,18 @@ export default function SignUpPage() {
         username: '', 
         password: '', 
         confirmPassword: '',    // Only required for validation in the frontend
-    })
+    }); 
 
     const onSignUp = async (event) => {
         event.preventDefault(); 
+        
+        if (user.password !== user.confirmPassword) {
+            alert('Passwords do not match!'); 
+            return; 
+        }
+
         try {
-            const res = await axios.post('api/users/signup', {
+            const res = await axios.post('api/users/signup', { // TODO: Update url with full backend url ".../api/users/signup"
                 email: user.email, 
                 username: user.username, 
                 password: user.password, 
@@ -73,7 +79,7 @@ export default function SignUpPage() {
                     />
                 </Form.Group>
 
-                <Form.Group className='mb-3' controlId='formPassword'>
+                <Form.Group className='mb-3' controlId='formConfirmPassword'>
                     <Form.Label>Password </Form.Label>
                     <Form.Control 
                         type='password' 
@@ -83,7 +89,7 @@ export default function SignUpPage() {
                     />
                 </Form.Group>
 
-                <Button variant='primary' type='submit'>Submit</Button>
+                <Button variant='primary' type='submit' onClick={onSignUp}>Submit</Button>
             </Form>
         </>
     ); 
