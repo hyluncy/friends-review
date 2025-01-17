@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import axios from 'axios'; 
-import { Button, Form } from 'react-bootstrap'; 
+import { Container, Button, Form } from 'react-bootstrap'; 
 import HelpTooltip from '@/components/helpTooltip';
 
 export default function SignUpPage() {
@@ -49,16 +49,15 @@ export default function SignUpPage() {
     }
     
     return (
-        <>
+        <Container>
             <h1>Sign-Up</h1>
+            <br />
             <Form>
                 <Form.Group className='mb-3' controlId='formEmail'>
-                    <Form.Label style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '5px'
-                    }}>
-                        Email address <HelpTooltip anchorSelect='.my-anchor' place='right' helpMessage='Your email will only be used for login purposes and will remain private.' /> 
+                    <Form.Label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        Email address   
+                        <HelpTooltip helpMessage='Your email will only be used for login purposes and will remain private.' /> 
                     </Form.Label>
-                    <br />
                     <Form.Control 
                         type='email' 
                         placeholder='Enter email'
@@ -68,12 +67,10 @@ export default function SignUpPage() {
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formUsername'>
-                    <Form.Label style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '5px'
-                    }}>
-                        Username <HelpTooltip anchorSelect='.my-anchor' place='right' helpMessage='Your username will be visible to other users and used to identify you on the platform.' /> 
+                    <Form.Label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        Username
+                        <HelpTooltip helpMessage='Your username will be visible to other users and used to identify you on the platform.' /> 
                     </Form.Label>
-                    <br/>
                     <Form.Control 
                         type='email' 
                         placeholder='Enter Username' 
@@ -92,7 +89,7 @@ export default function SignUpPage() {
                 </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formConfirmPassword'>
-                    <Form.Label>Password </Form.Label>
+                    <Form.Label>Confirm Password </Form.Label>
                     <Form.Control 
                         type='password' 
                         placeholder='Confirm Password'
@@ -103,6 +100,6 @@ export default function SignUpPage() {
 
                 <Button variant='primary' type='submit' onClick={onSignUp}>Submit</Button>
             </Form>
-        </>
+        </Container>
     ); 
 }
