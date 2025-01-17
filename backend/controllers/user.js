@@ -1,9 +1,14 @@
-const User = require('../models/users'); 
 const bcrypt = require('bcryptjs'); 
+const User = require('../models/users'); 
+const { isValidEmail } = require('../service/userService'); 
 
 const registerUser = async (req, res) => {
     try {
         const { email, username, password, confirmPassword } = req.body; 
+        const existingUser = await findUser(email); 
+        if (existingUser) {
+            return res.status(400).json({ message: 'An account already exists with the provided email. Please login.' }); 
+        }
 
         if (password !== confirmPassword) {
             return res.status(400).json({ message: 'Passwords do not match'})
@@ -32,17 +37,16 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body; 
-        const userAccount = await retrieveUser(email); 
+        const userAccount = await findUser(email); 
 
-        if (userAccount.status !== 200) {
-            return res.status(userAccount.status).json({ message: userAccount.message }); 
+        if (!userAccount) {
+            return res.status(404).json({ message: 'User not found' }); 
         }
 
-        const user = userAccount.user; // retrieveUser() returns both status and user 
-        const correctPassword = await bcrypt.compare(password, user .password); 
+        const correctPassword = await bcrypt.compare(password, userAccount.password); 
 
         if (!correctPassword) {
-            return { status: 401, message: 'Incorrect Password' }; 
+            return res.status(401).json({ message: 'Incorrect Password. Please try again' }); 
         }
         
         res.redirect('/'); 
@@ -52,20 +56,19 @@ const loginUser = async (req, res) => {
     }   
 }; 
 
-const retrieveUser = async (email) => {
+const findUser = async (searchedCredential) => {
     try {
-        const foundUser = await User.findOne({ email }); 
-        if (!foundUser) {
-            return { status: 404, message: 'User not found'}; 
-        }
-        return { status: 200, user: foundUser }; 
+        const isEmail = validEmail(searchedCredential);
+        return await User.findOne(
+            isEmail ? { email: searchedCredential } : { username: searchedCredential }
+        );
     } catch (err) {
-        return { status: 500, message: 'Error', error: err.message }; 
+        throw new Error('Database query failed: ' + err.message);
     }
-}; 
+};
 
 module.exports = {
     registerUser,
     loginUser,
-    retrieveUser,
+    findUser,
   };
