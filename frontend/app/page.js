@@ -1,11 +1,10 @@
-
-import MainNavbar from "../components/mainNavbar";
 import 'react-tooltip/dist/react-tooltip.css'; 
+import Container from 'react-bootstrap/Container'; 
 
 export default function Home() {
   return (
-    <>
-      <p>Home page</p>
-    </>
+    <Container>
+      <h1>Home Page</h1>
+    </Container>
   );
 }
