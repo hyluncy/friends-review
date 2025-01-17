@@ -8,6 +8,7 @@ import HelpTooltip from '@/components/helpTooltip';
 
 export default function SignUpPage() {
     const router = useRouter(); 
+    const [ error, setError ] = React.useState(null); 
     const [ user, setUser ] = React.useState({
         email: '', 
         username: '', 
@@ -15,14 +16,25 @@ export default function SignUpPage() {
         confirmPassword: '',    // Only required for validation in the frontend
     }); 
 
-    const onSignUp = async (event) => {
-        event.preventDefault(); 
-        
-        if (user.password !== user.confirmPassword) {
-            alert('Passwords do not match!'); 
-            return; 
+    const checkPassword = () => {
+        if (user.password.length < 10) {
+            setError('Passwords must be at least 10 characters.'); 
+            return false; 
         }
 
+        if (user.password !== user.confirmPassword) {
+            setError('Passwords do not match!'); 
+            return false; 
+        }
+
+        return true; 
+    }
+
+    const onSignUp = async (event) => {
+        event.preventDefault(); 
+        if (!checkPassword()) {
+            return;     // Prevent submission of form
+        }
         try {
             const res = await axios.post('api/users/signup', { // TODO: Update url with full backend url ".../api/users/signup"
                 email: user.email, 
