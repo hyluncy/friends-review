@@ -1,13 +1,28 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap'; 
 import Container from 'react-bootstrap/Container'; 
 
+
 export default function LoginPage() {
+    const [ email, setEmail ] = useState(''); 
+    const [ password, setPassword ] = useState(''); 
+    const [ error, setError ] = useState(null); 
     
+    const onLogin = async (event) => {
+        event.preventDefault(); 
+        try {
+            const res = await axios.post('/api/users/login', {  // TODO: Replace with backend url
+                email,
+                password
+            })
+        } catch (err) {
+            setError('Login Failed: ' + err.message); 
+        }
+    }
     return (
         <Container>
-            <h1>Sign-Up</h1>
+            <h1>Login</h1>
             <Form>
                 <Form.Group className='mb-3' controlId='formEmail'>
                     <Form.Label style={{
@@ -48,7 +63,7 @@ export default function LoginPage() {
                     />
                 </Form.Group>
 
-                <Button variant='primary' type='submit'>Login</Button>
+                <Button variant='primary' type='submit' onClick={onLogin}>Login</Button>
             </Form>
         </Container>
     )
