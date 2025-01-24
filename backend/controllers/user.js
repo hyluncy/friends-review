@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs'); 
 const User = require('../models/users'); 
-const { isValidEmail } = require('../service/userService'); 
+const { isValidEmail } = require('../services/userService'); 
 
 const registerUser = async (req, res) => {
     try {
@@ -29,7 +29,7 @@ const registerUser = async (req, res) => {
             res.status(400).json({ message: err.message })
         }
         else {
-            res.status(500).json({ message: 'Server error', err })
+            res.status(500).json({ message: 'Server error' })
         }
     }
 }; 
@@ -58,7 +58,7 @@ const loginUser = async (req, res) => {
 
 const findUser = async (searchedCredential) => {
     try {
-        const isEmail = validEmail(searchedCredential);
+        const isEmail = isValidEmail(searchedCredential);
         return await User.findOne(
             isEmail ? { email: searchedCredential } : { username: searchedCredential }
         );
