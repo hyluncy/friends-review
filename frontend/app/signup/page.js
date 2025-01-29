@@ -1,15 +1,16 @@
 'use client'
 import Link from 'next/link'; 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; 
 import axios from 'axios'; 
 import { Container, Button, Form } from 'react-bootstrap'; 
 import HelpTooltip from '@/components/helpTooltip';
+import signUp from '../api/authentication';
 
 export default function SignUpPage() {
     const router = useRouter(); 
-    const [ error, setError ] = React.useState(null); 
-    const [ user, setUser ] = React.useState({
+    const [ error, setError ] = useState(null); 
+    const [ user, setUser ] = useState({
         email: '', 
         username: '', 
         password: '', 
@@ -31,21 +32,8 @@ export default function SignUpPage() {
     }
 
     const onSignUp = async (event) => {
-        event.preventDefault(); 
-        if (!checkPassword()) {
-            return;     // Prevent submission of form
-        }
-        try {
-            const res = await axios.post('api/users/signup', { // TODO: Update url with full backend url ".../api/users/signup"
-                email: user.email, 
-                username: user.username, 
-                password: user.password, 
-                confirmPassword: user.confirmPassword,
-            }); 
-            router.push('/login'); 
-        } catch (err) {
-            console.log('Sign-Up Fail', err.message); 
-        }
+        event.preventDefault();
+        await signUp();
     }
     
     return (
@@ -72,7 +60,7 @@ export default function SignUpPage() {
                         <HelpTooltip helpMessage='Your username will be visible to other users and used to identify you on the platform.' /> 
                     </Form.Label>
                     <Form.Control 
-                        type='email' 
+                        type='text' 
                         placeholder='Enter Username' 
                         value={user.username}
                         onChange={(e) => setUser({ ...user, username: e.target.value})}/>
