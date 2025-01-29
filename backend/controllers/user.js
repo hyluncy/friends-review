@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs'); 
 const User = require('../models/users'); 
-const { isValidEmail } = require('../services/userService'); 
+const { findUser, findUserByUserName } = require('../database/query');
 
 const registerUser = async (req, res) => {
     try {
@@ -56,19 +56,7 @@ const loginUser = async (req, res) => {
     }   
 }; 
 
-const findUser = async (searchedCredential) => {
-    try {
-        const isEmail = isValidEmail(searchedCredential);
-        return await User.findOne(
-            isEmail ? { email: searchedCredential } : { username: searchedCredential }
-        );
-    } catch (err) {
-        throw new Error('Database query failed: ' + err.message);
-    }
-};
-
 module.exports = {
     registerUser,
     loginUser,
-    findUser,
   };
