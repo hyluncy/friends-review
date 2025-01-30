@@ -1,4 +1,5 @@
 const User = require('../models/users');
+const Experience = require('../models/experiences'); 
 const { isValidEmail } = require('../services/userService'); 
 
 const findUser = async (searchedCredential) => { //TODO: move to its own file
@@ -18,9 +19,19 @@ const findUserByUserName = async (username) => { //TODO: move to its own file
             { username: username }
         );
     } catch (err) {
-        throw new Error('Database query failed: ' + err.message);
+        throw new Error('Database query failed (username): ' + err.message);
     }
 };
+
+const findExperience = async (searchedExp) => {
+    try {
+        return await Experience.findOne(
+            { experience: searchedExp }
+        ); 
+    } catch (err) {
+        throw new Error('Database query failed (experience): ' + err.message); 
+    }
+}
 
 module.exports = {
     findUser,
