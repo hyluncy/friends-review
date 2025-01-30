@@ -46,7 +46,7 @@ export default function LoginPage() {
                     </Form.Label>
                     <br/>
                     <Form.Control 
-                        type='text' 
+                        type='text'
                         placeholder='Enter Username' 
                         value={user.username}
                         onChange={(e) => setUser({ ...user, username: e.target.value})}/>
