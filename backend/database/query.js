@@ -1,5 +1,5 @@
-const User = require('../models/users');
-const Experience = require('../models/experiences'); 
+const User = require('../models/user');
+const Experience = require('../models/experience'); 
 const { isValidEmail } = require('../services/userService'); 
 
 const findUser = async (searchedCredential) => { //TODO: move to its own file

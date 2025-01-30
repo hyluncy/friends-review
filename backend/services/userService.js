@@ -1,4 +1,4 @@
-const User = require('../models/users'); 
+const User = require('../models/user'); 
 
 const isValidEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
