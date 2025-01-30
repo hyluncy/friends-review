@@ -8,7 +8,6 @@ export default function LoginPage() {
     const [ email, setEmail ] = useState(''); 
     const [ password, setPassword ] = useState(''); 
     const [ error, setError ] = useState(null); 
-    
     const onLogin = async (event) => {
         event.preventDefault(); 
         try {
@@ -47,7 +46,7 @@ export default function LoginPage() {
                     </Form.Label>
                     <br/>
                     <Form.Control 
-                        type='email' 
+                        type='text' 
                         placeholder='Enter Username' 
                         value={user.username}
                         onChange={(e) => setUser({ ...user, username: e.target.value})}/>
