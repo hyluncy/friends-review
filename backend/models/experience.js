@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const experienceSchema = mongoose.Schema({
    name: { type: String, required: true, unique: true },
+   image: {}, 
    category: { type: String, required: true },
    overallRating: { type: Number }, // To be calculated and stored
 })
