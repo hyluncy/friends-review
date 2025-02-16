@@ -3,13 +3,22 @@ import React, { useState } from 'react';
 import { Nav, Navbar, Container, Form, Row, Col, Button } from 'react-bootstrap'; 
 import { useRouter } from 'next/navigation'; 
 import Link from 'next/link'; 
+import { Navigation } from 'react-router-dom'
 
 export default function MainNavbar() {
     const router = useRouter(); 
     const [ isExpanded, setExpanded ] = useState(false); 
+    const [ query, setQuery ] = useState(''); 
+    const navigate = useNavigate(); 
+
     const onNavClick = () => {
         setExpanded(false); 
+    
     }
+
+    const handleSearch = () => {
+
+    } 
 
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
