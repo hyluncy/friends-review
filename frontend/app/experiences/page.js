@@ -1,14 +1,14 @@
 import React from 'react'; 
 import axiosInstance from '../api/axoisConfig';
 import { useLocation, useNavigation } from 'react-router-dom'; 
-import { Container, Button, Form, Card, Container, Row, Col } from 'react-bootstrap'; 
+import { Container, Button, Form, Card, Row, Col } from 'react-bootstrap'; 
 
 export default function ExperienceList() {
     const [ experiences, setExperiences ] = useState([]); 
     const location = useLocation();     // Obtain current URL 
     const navigate = useNavigate();     // Navigating with search query
-    const queryParams = new URLSearchParams(location.search); 
-    const searchQuery = queryParams.get('search') || ''; 
+    const queryParams = new URLSearchParams(location.search); // TODO: may change 'search' 
+    const searchQuery = queryParams.get('search') || '';  // TODO: may use different url than search
 
     const fetchExperiences = async (searched = '') => {
         try {
@@ -18,6 +18,7 @@ export default function ExperienceList() {
             setExperiences(response.data);  
         } catch (err) {
             console.error('Error fetching experiences: ', err); 
+            
         }
     }; 
 
