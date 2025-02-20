@@ -2,6 +2,7 @@
 import React, { useState } from 'react'; 
 import { Nav, Navbar, Container, Form, Row, Col, Button } from 'react-bootstrap'; 
 import { useRouter } from 'next/navigation'; 
+import { useNavigate } from 'react-router-dom'; 
 import Link from 'next/link'; 
 import { Navigation } from 'react-router-dom'
 
@@ -16,9 +17,21 @@ export default function MainNavbar() {
     
     }
 
+<<<<<<< Updated upstream
     const handleSearch = () => {
 
     } 
+=======
+    const handleSearch = (e) => {
+        e.preventDefault(); 
+
+        if (query.trim()) {
+            navigate(`/experiences?search=${encodeURIComponent(query)}`); 
+        } else {
+            navigate('/experiences'); 
+        }
+    }
+>>>>>>> Stashed changes
 
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -40,6 +53,8 @@ export default function MainNavbar() {
                             type="text"
                             placeholder="Search"
                             className=" mr-sm-2"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)} // User input value used 
                             />
                         </Col>
                         <Col xs="auto">
