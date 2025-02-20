@@ -1,21 +1,31 @@
-import React from 'react'; 
+'use client'
+import React, { useState, useEffect } from 'react'; 
 import axiosInstance from '../api/axoisConfig';
-import { useLocation, useNavigation } from 'react-router-dom'; 
 import { Container, Button, Form, Card, Row, Col } from 'react-bootstrap'; 
+import { useSearchParams, useRouter } from 'next/navigation'
+
 
 export default function ExperienceList() {
-    const [ experiences, setExperiences ] = useState([]); 
-    const location = useLocation();     // Obtain current URL 
-    const navigate = useNavigate();     // Navigating with search query
-    const queryParams = new URLSearchParams(location.search); // TODO: may change 'search' 
-    const searchQuery = queryParams.get('search') || '';  // TODO: may use different url than search
-
+    const [ experiences, setExperiences ] = useState([]);  
+    const searchParams = useSearchParams(); 
+    const searchQuery = searchParams.get('search') || '';  // TODO: may use different url than search
+    const router = useRouter(); 
+    
     const fetchExperiences = async (searched = '') => {
         try {
-            const response = await axios.get('/experiences', {
-                params: { search: searchTerm }
+            console.log('fetching from experiences page API: ', searched); 
+            const response = await axiosInstance.get('/experiences', {
+                params: { search: searched }
             }); 
-            setExperiences(response.data);  
+            console.log("API Response:", response.data);
+            
+            if (Array.isArray(response.data)) {
+                setExperiences(response.data); 
+            }
+            else {
+                console.error('API Response: ', response.data)
+                setExperiences([]); 
+            }
         } catch (err) {
             console.error('Error fetching experiences: ', err); 
             
@@ -23,6 +33,11 @@ export default function ExperienceList() {
     }; 
 
     useEffect(() => {
+        const allExperiences = [
+            { _id: 1, name: "Experience 1" },
+            { _id: 2, name: "Experience 2" },
+            { _id: 3, name: "Experience 3" },
+        ];
         fetchExperiences(searchQuery); 
     }, [searchQuery]); 
 
@@ -36,7 +51,7 @@ export default function ExperienceList() {
                             <Card.Img variant='top' src={exp.image || 'https://dummyimage.com/400x300/9c90e8/f7f7f7.png&text=No+Image+Available'} alt={exp.name} />
                             <Card.Body>
                                 <Card.Title>{exp.name}</Card.Title>
-                                <Button variant="primary" onClick={() => navigate(`/experiences/${exp._id}`)}>View Experience</Button>
+                                <Button variant="primary" onClick={() => router.push(`/experiences/${exp._id}`)}>View Experience</Button>
                             </Card.Body>
                         </Card>
                     </Col>

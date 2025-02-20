@@ -2,36 +2,27 @@
 import React, { useState } from 'react'; 
 import { Nav, Navbar, Container, Form, Row, Col, Button } from 'react-bootstrap'; 
 import { useRouter } from 'next/navigation'; 
-import { useNavigate } from 'react-router-dom'; 
 import Link from 'next/link'; 
-import { Navigation } from 'react-router-dom'
+
 
 export default function MainNavbar() {
     const router = useRouter(); 
     const [ isExpanded, setExpanded ] = useState(false); 
     const [ query, setQuery ] = useState(''); 
-    const navigate = useNavigate(); 
 
     const onNavClick = () => {
         setExpanded(false); 
-    
     }
 
-<<<<<<< Updated upstream
-    const handleSearch = () => {
-
-    } 
-=======
     const handleSearch = (e) => {
         e.preventDefault(); 
 
         if (query.trim()) {
-            navigate(`/experiences?search=${encodeURIComponent(query)}`); 
+            router.push(`/experiences?search=${encodeURIComponent(query)}`); 
         } else {
-            navigate('/experiences'); 
+            router.push('/experiences'); 
         }
     }
->>>>>>> Stashed changes
 
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -46,7 +37,7 @@ export default function MainNavbar() {
                     <Nav.Link href="#my-friends">My Friends</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Form className='d-flex'>
+                    <Form className='d-flex' onSubmit={handleSearch}>
                         <Row>
                         <Col xs="auto">
                             <Form.Control
