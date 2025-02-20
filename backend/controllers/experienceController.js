@@ -1,31 +1,27 @@
 const { findOne } = require("../models/user");
+const Experience = require('../models/experience'); 
 
+// const addExperience = async (req, res) => {
+//     const { name, category } = req.body; 
+//     const existingExperience = await findOne({ name }); 
 
-const addExperience = async (req, res) => {
-    const [ name, category ] = req.body; 
-    const existingExperience = await findOne(name); 
-
-    if (existingExperience) {
-        return res.status(400).json({ message: 'Experience already exists. Please refer to '}) 
-    }
-}   
+//     if (existingExperience) {
+//         return res.status(400).json({ message: 'Experience already exists. Please refer to '}) 
+//     }
+// }   
 
 const retrieveExperience = async (req, res) => {
     try {
-        const { search } = req.query; 
-        let experiences; 
+        const searchQuery = req.query.search || ''; 
 
-        if (search) {   // Check if an experience was searched 
-            experiences = await experience.find({
-                name: { $regex: search, $options: "i" } // mongoose method to search for partial matches & is case-insensitive 
-            }); 
-        }
-        else {      // When nothing was searched / or on the experiences page
-            experiences = await experience.find(); 
-        }
-        res.status(200).json(experiences); 
+        let filter = searchQuery ? { name: { $regex: searchQuery, $options: "i" } } : {};
+
+        const experiences = await Experience.find(filter);
+    
+        res.status(200).json(Array.isArray(experiences) ? experiences : []); 
     } catch (err) {
         res.status(500).json({err: 'Server Error Retrieving Experiences' }); 
     }
 }; 
 
+module.exports = { retrieveExperience };

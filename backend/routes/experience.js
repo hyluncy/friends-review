@@ -1,11 +1,11 @@
 const express = require('express'); 
 const router = express.Router(); 
 const {
-    addExperience,
+    //addExperience,
     retrieveExperience,  
-} = require('../controllers/experience'); 
+} = require('../controllers/experienceController'); 
 
-router.get('/experiences', retrieveExperience) 
-router.post('/experiences/addNew', addExperience)
+router.get('/', retrieveExperience) 
+//router.post('/experiences/addNew', addExperience)
  
 module.exports = router; 
