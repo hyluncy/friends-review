@@ -1,8 +1,9 @@
 'use client'; 
 import React, { useState } from 'react'; 
-import { Nav, Navbar, Container, Form, Row, Col, Button } from 'react-bootstrap'; 
+import { Nav, Navbar, Container, Form, Row, Col } from 'react-bootstrap'; 
 import { useRouter } from 'next/navigation'; 
 import Link from 'next/link'; 
+import ButtonComp from './button';
 
 
 export default function MainNavbar() {
@@ -49,7 +50,7 @@ export default function MainNavbar() {
                             />
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit">Submit</Button>
+                            <ButtonComp text='Search' />
                         </Col>
                         </Row>
                     </Form>
