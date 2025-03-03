@@ -11,18 +11,15 @@ export default function MainNavbar() {
     const [ isExpanded, setExpanded ] = useState(false); 
     const [ query, setQuery ] = useState(''); 
 
-    const onNavClick = () => {
-        setExpanded(false); 
-    }
+    const onNavClick = () => setExpanded(false);
 
     const handleSearch = (e) => {
         e.preventDefault(); 
+        const searchQuery = query.trim()
 
-        if (query.trim()) {
-            router.push(`/experiences?search=${encodeURIComponent(query)}`); 
-        } else {
-            router.push('/experiences'); 
-        }
+        searchQuery ? 
+            router.push(`/experiences?search=${encodeURIComponent(searchQuery)}`) : router.push('/experiences');
+        
     }
 
     return (
