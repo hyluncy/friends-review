@@ -1,9 +1,6 @@
 import axiosInstance from './axoisConfig';
 
 const signUp = async () => {
-    // if (!checkPassword()) {
-    //     return;     // Prevent submission of form
-    // }
     try {
         const res = await axiosInstance.post('/api/users/signup', { // TODO: Update url with full backend url ".../api/users/signup"
             email: "hello@hello.com", 

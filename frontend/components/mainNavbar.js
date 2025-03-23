@@ -1,8 +1,9 @@
 'use client'; 
 import React, { useState } from 'react'; 
-import { Nav, Navbar, Container, Form, Row, Col, Button } from 'react-bootstrap'; 
+import { Nav, Navbar, Container, Form, Row, Col } from 'react-bootstrap'; 
 import { useRouter } from 'next/navigation'; 
 import Link from 'next/link'; 
+import ButtonComp from './button';
 
 
 export default function MainNavbar() {
@@ -10,18 +11,15 @@ export default function MainNavbar() {
     const [ isExpanded, setExpanded ] = useState(false); 
     const [ query, setQuery ] = useState(''); 
 
-    const onNavClick = () => {
-        setExpanded(false); 
-    }
+    const onNavClick = () => setExpanded(false);
 
     const handleSearch = (e) => {
         e.preventDefault(); 
+        const searchQuery = query.trim()
 
-        if (query.trim()) {
-            router.push(`/experiences?search=${encodeURIComponent(query)}`); 
-        } else {
-            router.push('/experiences'); 
-        }
+        searchQuery ? 
+            router.push(`/experiences?search=${encodeURIComponent(searchQuery)}`) : router.push('/experiences');
+        
     }
 
     return (
@@ -49,7 +47,7 @@ export default function MainNavbar() {
                             />
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit">Submit</Button>
+                            <ButtonComp text='Search' />
                         </Col>
                         </Row>
                     </Form>
