@@ -1,14 +1,25 @@
-const { findOne } = require("../models/user");
+
 const Experience = require('../models/experience'); 
 
-// const addExperience = async (req, res) => {
-//     const { name, category } = req.body; 
-//     const existingExperience = await findOne({ name }); 
+const addExperience = async (req, res) => {
+    try {
+        const { image, name, category } = req.body; 
+        const existingExperience = await Experience.findOne({ name }); 
 
-//     if (existingExperience) {
-//         return res.status(400).json({ message: 'Experience already exists. Please refer to '}) 
-//     }
-// }   
+        if (existingExperience) {
+            return res.status(400).json({ message: 'Experience already exists. Please refer to '}) 
+        }
+
+        const newExperience = new Experience({ name, image, category })
+        await newExperience.save(); 
+        return res.status(201).json(newExperience); 
+    } catch (err) {
+        return res.status(500).json({ err: 'Server error while attempting to add experience.'})
+    }
+    
+
+    
+}   
 
 const retrieveExperience = async (req, res) => {
     try {
@@ -24,4 +35,4 @@ const retrieveExperience = async (req, res) => {
     }
 }; 
 
-module.exports = { retrieveExperience };
+module.exports = { retrieveExperience, addExperience };

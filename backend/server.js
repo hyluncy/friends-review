@@ -18,7 +18,7 @@ app.use(cors({                // Temporary while using localhost to ensure front
 }));
 
 app.use('/api/users', require('./routes/user')); 
-app.use('/experiences', require('./routes/experience'))
+app.use('/api/experiences', require('./routes/experience'))
 
 // Connect to MongoDB
 db.connectToDB(); 
