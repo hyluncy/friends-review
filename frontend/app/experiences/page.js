@@ -1,8 +1,10 @@
 'use client'
 import React, { useState, useEffect } from 'react'; 
 import axiosInstance from '../api/axoisConfig';
-import { Container, Button, Form, Card, Row, Col } from 'react-bootstrap'; 
-import { useSearchParams, useRouter } from 'next/navigation'
+import axiosNext from '../api/axiosExperienceConfig';
+import { Container, Button, Form, Row, Col } from 'react-bootstrap'; 
+import { useSearchParams, useRouter } from 'next/navigation'; 
+import ExperienceCard from './ExperienceCard';
 
 
 export default function ExperienceList() {
@@ -14,7 +16,7 @@ export default function ExperienceList() {
     const fetchExperiences = async (searched = '') => {
         try {
             console.log('fetching from experiences page API: ', searched); 
-            const response = await axiosInstance.get('/experiences', {
+            const response = await axiosNext.get('/experiences', {
                 params: { search: searched }
             }); 
             console.log("API Response:", response.data);
@@ -33,11 +35,12 @@ export default function ExperienceList() {
     }; 
 
     useEffect(() => {
-        const allExperiences = [
-            { _id: 1, name: "Experience 1" },
-            { _id: 2, name: "Experience 2" },
-            { _id: 3, name: "Experience 3" },
-        ];
+        // const allExperiences = [
+        //     { _id: 1, name: "Experience 1" },
+        //     { _id: 2, name: "Experience 2" },
+        //     { _id: 3, name: "Experience 3" },
+        // ];
+        debugger
         fetchExperiences(searchQuery); 
     }, [searchQuery]); 
 
@@ -45,16 +48,10 @@ export default function ExperienceList() {
         <Container>
             <h1>Experiences</h1>
             <Row>
-                { experiences.map((exp) => (
-                    <Col key={exp._id} md={4} sm={6} xs={12} className='mb-4'>
-                        <Card>
-                            <Card.Img variant='top' src={exp.image || 'https://dummyimage.com/400x300/9c90e8/f7f7f7.png&text=No+Image+Available'} alt={exp.name} />
-                            <Card.Body>
-                                <Card.Title>{exp.name}</Card.Title>
-                                <Button variant="primary" onClick={() => router.push(`/experiences/${exp._id}`)}>View Experience</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                {experiences.map((exp) => (
+                <Col key={exp._id} md={4} sm={6} xs={12} className="mb-4">
+                    <ExperienceCard exp={exp} />
+                </Col>
                 ))}
             </Row>
         </Container>
