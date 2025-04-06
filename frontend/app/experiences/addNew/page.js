@@ -1,4 +1,7 @@
+import { useState } from 'react' 
+export default function NewExperienceModal() {
+    const [ newExperience, setNewExperience ] = useState('')
+    return (
 
-export default function NewProductModal() {
-    
-}
+    )
+} 
