@@ -18,6 +18,7 @@ export default function SignUpPage() {
     }); 
 
     const checkPassword = () => {
+        debugger
         if (user.password.length < 10) {
             setError('Passwords must be at least 10 characters.'); 
             return false; 
@@ -32,11 +33,14 @@ export default function SignUpPage() {
     }
 
     const onSignUp = async (event) => {
-        event.preventDefault();
-        if (!checkPassword) {
+        event.preventDefault()
+        debugger
+        if (checkPassword()) {
+            await signUp(user) 
+            router.push('/')
+        } else {
             return
         }
-        await signUp(user);
     }
     
     return (
@@ -88,8 +92,11 @@ export default function SignUpPage() {
                         onChange={(e) => setUser({ ...user, confirmPassword: e.target.value})}
                     />
                 </Form.Group>
-
-                <Button variant='primary' type='submit' onClick={onSignUp}>Submit</Button>
+                <div>
+                    <Button variant='primary' type='submit' onClick={onSignUp}>Submit</Button>
+                    {error && <span style={{ color: 'red', marginLeft: '10px' }}>{error}</span>}
+                </div>
+                {/* <Button variant='primary' type='submit' onClick={onSignUp}>Submit</Button> */}
             </Form>
         </Container>
     ); 
