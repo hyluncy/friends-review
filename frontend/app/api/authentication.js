@@ -1,13 +1,8 @@
 import axiosInstance from './axoisConfig';
 
-const signUp = async () => {
+const signUp = async (userData) => {
     try {
-        const res = await axiosInstance.post('/api/users/signup', { // TODO: Update url with full backend url ".../api/users/signup"
-            email: "hello@hello.com", 
-            username: "helloworld", 
-            password: "password", 
-            confirmPassword: "password",
-        }); 
+        const res = await axiosInstance.post('/api/users/signup', userData); 
         debugger;
         console.log(res);
     } catch (err) {

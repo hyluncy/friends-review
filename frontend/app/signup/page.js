@@ -33,7 +33,10 @@ export default function SignUpPage() {
 
     const onSignUp = async (event) => {
         event.preventDefault();
-        await signUp();
+        if (!checkPassword) {
+            return
+        }
+        await signUp(user);
     }
     
     return (
