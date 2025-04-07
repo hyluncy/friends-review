@@ -1,6 +1,6 @@
 import { useState } from 'react'; 
 import { Modal, Button, Form } from 'react-bootstrap'; 
-import addNewExperience from '../../api/axiosExperienceConfig';  
+import { addNewExperience } from '../../api/axiosExperienceConfig';  
 
 export default function NewExperienceModal({ onClose }) {
     const [ exp, setExp ] = useState(''); 
@@ -8,7 +8,11 @@ export default function NewExperienceModal({ onClose }) {
     
     const onAddNew = async (event) => {
         event.preventDefault() // May not need, depeneding on what I want to do w/ the modal 
-        await addNewExperience(exp)
+        const updatedExp = {
+            ...exp,
+            image: exp.image ? exp.image : 'https://dummyimage.com/400x300/9c90e8/f7f7f7.png&text=No+Image+Available'
+        };
+        await addNewExperience(updatedExp)
         onClose() 
     }
 
