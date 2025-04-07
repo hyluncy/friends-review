@@ -16,9 +16,6 @@ const addExperience = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ err: 'Server error while attempting to add experience.'})
     }
-    
-
-    
 }   
 
 const retrieveExperience = async (req, res) => {
@@ -35,4 +32,18 @@ const retrieveExperience = async (req, res) => {
     }
 }; 
 
-module.exports = { retrieveExperience, addExperience };
+const retrieveExperienceById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const experience = await Experience.findById(id);
+        if (!experience) {
+            return res.status(404).json({ message: 'Experience not found (backend) experienceController' });
+        }
+        res.status(200).json(experience);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error retrieving experience (backend) experienceController' });
+    }
+};
+
+
+module.exports = { retrieveExperience, addExperience, retrieveExperienceById };
