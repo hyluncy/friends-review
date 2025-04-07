@@ -31,7 +31,7 @@ export default function MainNavbar() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="#experieces">Experiences</Nav.Link>
+                    <Nav.Link href="/experiences">Experiences</Nav.Link>
                     <Nav.Link href="#my-friends">My Friends</Nav.Link>
                 </Nav>
                 <Nav>
