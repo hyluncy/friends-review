@@ -1,18 +1,19 @@
 const bcrypt = require('bcryptjs'); 
 const User = require('../models/user'); 
 const { findUser, findUserByUserName } = require('../database/query');
+const logger = require('../utils/logger'); 
 
 const registerUser = async (req, res) => {
     try {
         const { email, username, password, confirmPassword } = req.body; 
         const existingUser = await findUser(email); 
         if (existingUser) {
-            console.log('Account already exists')
+            logger.info('Account already exists')
             return res.status(400).json({ message: 'An account already exists with the provided email. Please login.' }); 
         }
 
         if (password !== confirmPassword) {
-            console.log('Password Issue')
+            logger.info('Password Issue')
             return res.status(400).json({ message: 'Passwords do not match'})
         }
         
@@ -25,7 +26,7 @@ const registerUser = async (req, res) => {
         }); 
 
         await user.save(); 
-        console.log('user save finished')
+        logger.info('User save finished')
         res.json({ message: `User, ${username}, has been registered.` });
     } catch(err) {
         if (err.name === 'ValidationError') {
