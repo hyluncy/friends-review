@@ -1,32 +1,32 @@
-const express = require('express');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const cors = require('cors');
-require('dotenv').config(); 
-const db = require('./database/config/dbConnect'); 
+// const express = require('express');
+// const path = require('path');
+// const bcrypt = require('bcrypt');
+// const cors = require('cors');
+// require('dotenv').config(); 
+// const db = require('./database/config/dbConnect'); 
 
-const app = express();
+const app = require('./app'); 
 const HTTP_PORT = process.env.PORT || 4000;
 
 // Middleware
-app.use(express.json());
-// app.use(cors());
-app.use(cors({                // Temporary while using localhost to ensure frontend and backend communicate even though we're using different ports. 
-   origin: "http://localhost:3000",
-   methods: "GET,POST,PUT,DELETE",
-   credentials: true
-}));
+// app.use(express.json());
+// // app.use(cors());
+// app.use(cors({                // Temporary while using localhost to ensure frontend and backend communicate even though we're using different ports. 
+//    origin: "http://localhost:3000",
+//    methods: "GET,POST,PUT,DELETE",
+//    credentials: true
+// }));
 
-app.use('/api/users', require('./routes/user')); 
-app.use('/api/experiences', require('./routes/experience'))
+// app.use('/api/users', require('./routes/user')); 
+// app.use('/api/experiences', require('./routes/experience'))
 
-// Connect to MongoDB
-db.connectToDB(); 
+// // Connect to MongoDB
+// db.connectToDB(); 
 
-// Home page test route
-app.get('/', (req, res) => {
-   res.send('Hello World');
-});
+// // Home page test route
+// app.get('/', (req, res) => {
+//    res.send('Hello World');
+// });
 
 // User authentication
 // POST signup --> create new user
@@ -55,6 +55,6 @@ app.get('/', (req, res) => {
 // Start Server
 app.listen(HTTP_PORT, () => console.log(`Server listening on: ${HTTP_PORT}`));
 
-
+// module.exports = app
 
 
