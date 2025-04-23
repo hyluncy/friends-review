@@ -7,14 +7,19 @@ import Container from 'react-bootstrap/Container';
 export default function LoginPage() {
     const [ email, setEmail ] = useState(''); 
     const [ password, setPassword ] = useState(''); 
+    const [ login, setLogin ] = useState(false); 
     const [ error, setError ] = useState(null); 
+
     const onLogin = async (event) => {
         event.preventDefault(); 
         try {
-            const res = await axios.post('/api/users/login', {  // TODO: Replace with backend url
-                email,
-                password
-            })
+            // const res = await axios.post('/api/users/login', {  // TODO: Replace with backend url
+            //     email,
+            //     password
+            // }) 
+            // TODO: re-do login backend and set route to axios 
+
+            alert('Successfully Logged In!'); 
         } catch (err) {
             setError('Login Failed: ' + err.message); 
         }
